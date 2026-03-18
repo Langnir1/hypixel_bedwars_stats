@@ -6,7 +6,7 @@ class UrlBuilder {
       'api.hypixel.net',
       '/v2/player',
       {
-        'key': api_key,
+        'key': apiKey,
         'name': username,
       }
     );

@@ -18,7 +18,7 @@ void main(){
   });
 
   test('builds the correct key parameter', () {
-    expect(url.queryParameters['key'], api_key);
+    expect(url.queryParameters['key'], apiKey);
   });
 
   test('builds the correct username parameter', (){

@@ -1,10 +1,27 @@
 import 'dart:convert';
 
 class DataParser {
-  String getBedwarsTotalKills(String content) {
+  int getBedwarsTotalKills(String content) {
     final decoded = jsonDecode(content);
 
-    final result = decoded['player']['stats']['Bedwars']['kills_bedwars'];
-    return result.toString();
+    final player = decoded['player'];
+    if (player == null) {
+      throw Exception('Player not found on Hypixel');
+    }
+
+    final stats = player['stats'];
+    final bedwars = stats?['Bedwars'];
+
+    if (bedwars == null) {
+      throw Exception('No Bedwars stats found');
+    }
+
+    final kills = bedwars['kills_bedwars'];
+
+    if (kills == null) {
+      return 0;
+    }
+
+    return kills as int;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hypixel_stat_tracker/hypixel_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,9 +27,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _usernameController = TextEditingController();
+  final HypixelService _service = HypixelService();
   String? _resultText;
 
-  void _seeStats() {
+  Future<void> _seeStats() async {
     final username = _usernameController.text.trim();
 
     if (username.isEmpty) {
@@ -38,8 +40,9 @@ class _MyHomePageState extends State<MyHomePage> {
       return;
     }
 
+    final kills = await _service.getBedwarsKills(username);
     setState(() {
-      _resultText = 'Kills: 1,222,000,000';
+      _resultText = 'Kills: $kills';
     });
   }
 
