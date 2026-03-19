@@ -17,9 +17,6 @@ class DataParser {
       throw Exception('No Bedwars stats found');
     }
 
-    //final kills = bedwars['kills_bedwars'];
-    //final gamesPlayed = bedwars['games_played_bedwars_1'];
-
     return BedwarsStats(
       kills: bedwars['kills_bedwars'] ?? 0,
       gamesPlayed: bedwars['games_played_bedwars_1'] ?? 0,
