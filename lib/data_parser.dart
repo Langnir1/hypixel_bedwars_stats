@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'package:hypixel_stat_tracker/bedwars_stats.dart';
 
 class DataParser {
-  int getBedwarsTotalKills(String content) {
+  BedwarsStats getBedwarsStats(String content) {
     final decoded = jsonDecode(content);
 
     final player = decoded['player'];
@@ -16,12 +17,12 @@ class DataParser {
       throw Exception('No Bedwars stats found');
     }
 
-    final kills = bedwars['kills_bedwars'];
+    //final kills = bedwars['kills_bedwars'];
+    //final gamesPlayed = bedwars['games_played_bedwars_1'];
 
-    if (kills == null) {
-      return 0;
-    }
-
-    return kills as int;
+    return BedwarsStats(
+      kills: bedwars['kills_bedwars'] ?? 0,
+      gamesPlayed: bedwars['games_played_bedwars_1'] ?? 0,
+    );
   }
 }

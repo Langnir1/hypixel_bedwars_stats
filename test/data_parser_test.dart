@@ -7,7 +7,7 @@ void main() {
   test("Getting Bedwars kills", () async {
     final content = await File('test/technoblade.json').readAsString();
     DataParser parser = DataParser();
-    final bedwarsKills = parser.getBedwarsTotalKills(content);
-    expect(bedwarsKills, "7707");
+    final stats = parser.getBedwarsStats(content);
+    expect(stats.kills, 7707);
   });
 }

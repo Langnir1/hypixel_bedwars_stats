@@ -40,10 +40,18 @@ class _MyHomePageState extends State<MyHomePage> {
       return;
     }
 
-    final kills = await _service.getBedwarsKills(username);
-    setState(() {
-      _resultText = 'Kills: $kills';
-    });
+    try {
+      final stats = await _service.getBedwarsStats(username);
+
+      setState(() {
+        _resultText =
+        'Kills: ${stats.kills}\n' 'Games Played: ${stats.gamesPlayed}\n';
+      });
+    } catch (e){
+      setState((){
+        _resultText = e.toString().replaceFirst('Exception: ', '');
+      });
+    }
   }
 
   @override
