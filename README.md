@@ -7,11 +7,18 @@ of the flutter application is to be able to look up 2 different players name, co
 handles edge cases by displaying messages like, "No player found" when a username does not exist and
 "No player statistics" when a player has no bedwars data. 
 
+## Instructions
+---
+To be able to run this program you need to create a dart file called Secrets in the lib folder, then
+within that dart file write "const String apiKey = 'api key goes here';". To be able to get the api 
+key you must have a Minecraft Mojang account adn create a Hypixel account then register for the api 
+key at https://developer.hypixel.net/. If unable to access or gain the api key then email 
+daniel.luengas@bsu.edu or joshua.halamka@bsu.edu.
+
+
 ## Authors
 ---
 - Joshua Halamka
 - Daniel Luengas
 - Breckin White
 - Yonghang Tang
-
-
