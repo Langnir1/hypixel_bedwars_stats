@@ -13,14 +13,14 @@ class DataParser {
     final stats = player['stats'];
     final bedwars = stats?['Bedwars'];
 
-    //Change away form throwing Exception. This is not an exceptional case
     if (bedwars == null) {
-      throw Exception('No Bedwars stats found');
+      return BedwarsStats(hasBedwarsStats: false, kills: 0, gamesPlayed: 0);
     }
 
     return BedwarsStats(
       kills: bedwars['kills_bedwars'] ?? 0,
       gamesPlayed: bedwars['games_played_bedwars_1'] ?? 0,
+      hasBedwarsStats: true,
     );
   }
 }

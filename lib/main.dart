@@ -44,8 +44,13 @@ class _MyHomePageState extends State<MyHomePage> {
       final stats = await _service.getBedwarsStats(username);
 
       setState(() {
-        _resultText =
-        'Kills: ${stats.kills}\n' 'Games Played: ${stats.gamesPlayed}\n';
+        if (!stats.hasBedwarsStats){
+          _resultText = 'No Bedwars stats.';
+        } else {
+          _resultText =
+          'Kills: ${stats.kills}\n'
+          'Games Played: ${stats.gamesPlayed}\n';
+        }
       });
     } catch (e){
       setState((){
