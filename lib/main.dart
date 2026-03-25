@@ -48,8 +48,15 @@ class _MyHomePageState extends State<MyHomePage> {
           _resultText = 'No Bedwars stats.';
         } else {
           _resultText =
+          'Games Played: ${stats.gamesPlayed}\n'
           'Kills: ${stats.kills}\n'
-          'Games Played: ${stats.gamesPlayed}\n';
+          'Final kills: ${stats.final_kills}\n'
+          'Deaths: ${stats.deaths_bedwars}\n'
+          'Final Deaths ${stats.final_deaths_bedwars}\n'
+          'Beds Lost: ${stats.beds_lost_bedwars}\n'
+          'Beds Broken: ${stats.beds_broken_bedwars}\n'
+          'Wins: ${stats.wins_bedwars}\n'
+          'Losses: ${stats.losses_bedwars}\n';
         }
       });
     } catch (e){
