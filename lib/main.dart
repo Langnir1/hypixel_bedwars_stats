@@ -74,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                 ),
+                onSubmitted: (_) => _seeStats(),
               ),
             ),
             const SizedBox(height: 12),
