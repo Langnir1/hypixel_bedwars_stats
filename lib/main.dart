@@ -84,6 +84,10 @@ class _MyHomePageState extends State<MyHomePage> {
               child: TextField(
                 controller: _usernameController,
                 decoration: const InputDecoration(
+                  hintText: 'Enter a Minecraft username',
+                  hintStyle: TextStyle(
+                    color: Color(0xFF9E9E9E),
+                  ),
                   border: OutlineInputBorder(),
                 ),
                 onSubmitted: (_) => _seeStats(),
