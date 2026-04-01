@@ -127,6 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFEEEEEE),
       body: Column(
         children: <Widget>[
           Image.asset(
@@ -135,6 +136,12 @@ class _MyHomePageState extends State<MyHomePage> {
             fit: BoxFit.cover,
           ),
           const SizedBox(height: 20),
+
+          Image.asset(
+            'images/playerstat.png',
+                width: 200,
+                fit: BoxFit.contain,
+          ),
           Expanded(
             child: Center(
               child: Column(
