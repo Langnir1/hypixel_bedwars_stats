@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Hypixel Comparer',
+      title: 'Hypixel Comparator',
       debugShowCheckedModeBanner: false,
       home: const MyHomePage(),
     );
@@ -44,23 +44,23 @@ class _MyHomePageState extends State<MyHomePage> {
       final stats = await _service.getBedwarsStats(username);
 
       setState(() {
-        if (!stats.hasBedwarsStats){
+        if (!stats.hasBedwarsStats) {
           _resultText = 'No Bedwars stats.';
         } else {
           _resultText =
           'Games Played: ${stats.gamesPlayed}\n'
-          'Kills: ${stats.kills}\n'
-          'Final kills: ${stats.final_kills}\n'
-          'Deaths: ${stats.deaths_bedwars}\n'
-          'Final Deaths ${stats.final_deaths_bedwars}\n'
-          'Beds Lost: ${stats.beds_lost_bedwars}\n'
-          'Beds Broken: ${stats.beds_broken_bedwars}\n'
-          'Wins: ${stats.wins_bedwars}\n'
-          'Losses: ${stats.losses_bedwars}\n';
+              'Kills: ${stats.kills}\n'
+              'Final kills: ${stats.final_kills}\n'
+              'Deaths: ${stats.deaths_bedwars}\n'
+              'Final Deaths ${stats.final_deaths_bedwars}\n'
+              'Beds Lost: ${stats.beds_lost_bedwars}\n'
+              'Beds Broken: ${stats.beds_broken_bedwars}\n'
+              'Wins: ${stats.wins_bedwars}\n'
+              'Losses: ${stats.losses_bedwars}\n';
         }
       });
-    } catch (e){
-      setState((){
+    } catch (e) {
+      setState(() {
         _resultText = e.toString().replaceFirst('Exception: ', '');
       });
     }
@@ -75,41 +75,53 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 300,
-              child: TextField(
-                controller: _usernameController,
-                decoration: const InputDecoration(
-                  hintText: 'Enter a Minecraft username',
-                  hintStyle: TextStyle(
-                    color: Color(0xFF9E9E9E),
+      body: Column(
+        children: <Widget>[
+          Image.asset(
+            'images/hypixelbedwars.png',
+            width: 500,
+            fit: BoxFit.cover,
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 300,
+                    child: TextField(
+                      controller: _usernameController,
+                      decoration: const InputDecoration(
+                        hintText: 'Enter a Minecraft username',
+                        hintStyle: TextStyle(
+                          color: Color(0xFF9E9E9E),
+                        ),
+                        border: OutlineInputBorder(),
+                      ),
+                      onSubmitted: (_) => _seeStats(),
+                    ),
                   ),
-                  border: OutlineInputBorder(),
-                ),
-                onSubmitted: (_) => _seeStats(),
+                  const SizedBox(height: 12),
+                  ElevatedButton(
+                    onPressed: _seeStats,
+                    child: const Text('See Stats'),
+                  ),
+                  const SizedBox(height: 20),
+                  if (_resultText != null)
+                    Container(
+                      width: 220,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                      ),
+                      child: Text(_resultText!),
+                    ),
+                ],
               ),
             ),
-            const SizedBox(height: 12),
-            ElevatedButton(
-              onPressed: _seeStats,
-              child: const Text('See Stats'),
-            ),
-            const SizedBox(height: 20),
-            if (_resultText != null)
-              Container(
-                width: 220,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                ),
-                child: Text(_resultText!),
-              ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
