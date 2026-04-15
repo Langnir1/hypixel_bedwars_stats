@@ -2,7 +2,7 @@ class BedwarsStats {
   final bool hasBedwarsStats;
   final int kills; /// This is total kills of all types of kills.
   final int gamesPlayed;
-  final int final_kills;
+  final int finalKills;
   final int deaths_bedwars; /// This is the total deaths for all types of deaths.
   final int final_deaths_bedwars;
   final int beds_lost_bedwars;
@@ -14,7 +14,7 @@ class BedwarsStats {
     required this.hasBedwarsStats,
     required this.kills,
     required this.gamesPlayed,
-    required this.final_kills,
+    required this.finalKills,
     required this.deaths_bedwars,
     required this.final_deaths_bedwars,
     required this.beds_lost_bedwars,
