@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hypixel_stat_tracker/hypixel_service.dart';
+import 'package:hypixel_stat_tracker/secrets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _username1Controller = TextEditingController();
   final TextEditingController _username2Controller = TextEditingController();
-  final HypixelService _service = HypixelService();
+  final HypixelService _service = HypixelService(apiKey: apiKey);
 
   String? _user1ResultText;
   String? _user2ResultText;
@@ -63,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ? 'No Bedwars Stats.'
         :'Games Played: ${stats.gamesPlayed}\n'
           'Kills: ${stats.kills}\n'
-          'Final kills: ${stats.final_kills}\n'
+          'Final kills: ${stats.finalKills}\n'
           'Deaths: ${stats.deaths_bedwars}\n'
           'Final Deaths ${stats.final_deaths_bedwars}\n'
           'Beds Lost: ${stats.beds_lost_bedwars}\n'

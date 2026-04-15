@@ -18,7 +18,7 @@ class DataParser {
           hasBedwarsStats: false,
           kills: 0,
           gamesPlayed: 0,
-          final_kills: 0,
+          finalKills: 0,
           deaths_bedwars: 0,
           final_deaths_bedwars: 0,
           beds_lost_bedwars: 0,
@@ -31,7 +31,7 @@ class DataParser {
     return BedwarsStats(
       kills: bedwars['kills_bedwars'] ?? 0,
       gamesPlayed: bedwars['games_played_bedwars_1'] ?? 0,
-      final_kills: bedwars['final_kills_bedwars'] ?? 0,
+      finalKills: bedwars['final_kills_bedwars'] ?? 0,
       deaths_bedwars: bedwars['deaths_bedwars'] ?? 0,
       final_deaths_bedwars: bedwars['final_deaths_bedwars'] ?? 0,
       beds_lost_bedwars: bedwars['beds_lost_bedwars'] ?? 0,

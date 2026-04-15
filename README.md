@@ -13,7 +13,7 @@ To be able to run this program you need to create a dart file called "secrets.da
 within that dart file write "const String apiKey = 'api key goes here';". To be able to get the api 
 key you must have a Minecraft Mojang account and create a Hypixel account then register for the api 
 key at https://developer.hypixel.net/. If unable to access or gain the api key then email 
-daniel.luengas@bsu.edu or joshua.halamka@bsu.edu.
+Daniel Luengas or Joshua Halamka.
 
 
 ## Authors

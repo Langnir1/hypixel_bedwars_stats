@@ -10,7 +10,7 @@ void main(){
     final mockClient = MockClient((request) async{
       throw const SocketException('No internet');
     });
-    final service = HypixelService(client: mockClient);
+    final service = HypixelService(apiKey: 'test_key', client: mockClient);
     await expectLater(
       service.getBedwarsStats('technoblade'),
       throwsA(isA<Exception>()),
@@ -22,7 +22,7 @@ void main(){
     final mockClient = MockClient((request) async {
       return http.Response(content, 200);
     });
-    final service = HypixelService(client: mockClient);
+    final service = HypixelService(apiKey: 'test_key', client: mockClient);
     final result = await service.getBedwarsStats('technoblade');
     expect(result, 7707);
   });
