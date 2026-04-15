@@ -15,6 +15,9 @@ key you must have a Minecraft Mojang account and create a Hypixel account then r
 key at https://developer.hypixel.net/. If unable to access or gain the api key then email 
 daniel.luengas@bsu.edu or joshua.halamka@bsu.edu.
 
+## Resources
+---
+hypixelbedwars.png acquired from https://hypixel.net/threads/bedwars-logo-render.1749515/
 
 ## Authors
 ---

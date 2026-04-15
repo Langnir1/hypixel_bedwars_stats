@@ -1,14 +1,14 @@
 class BedwarsStats {
   final bool hasBedwarsStats;
-  final int kills;
+  final int kills; /// This is total kills of all types of kills.
   final int gamesPlayed;
   final int final_kills;
-  final int deaths_bedwars;
+  final int deaths_bedwars; /// This is the total deaths for all types of deaths.
   final int final_deaths_bedwars;
   final int beds_lost_bedwars;
   final int beds_broken_bedwars;
-  final int wins_bedwars;
-  final int losses_bedwars;
+  final int wins_bedwars; /// Overall wins for every type of game mode.
+  final int losses_bedwars; /// Overall losses for every type of game mode
 
   BedwarsStats({
     required this.hasBedwarsStats,
@@ -22,4 +22,10 @@ class BedwarsStats {
     required this.wins_bedwars,
     required this.losses_bedwars,
   });
+
+  double get winLossRatio =>
+      losses_bedwars == 0 ? wins_bedwars.toDouble() : wins_bedwars / losses_bedwars;
+
+  double get killDeathRatio =>
+      deaths_bedwars == 0 ? kills.toDouble() : kills / deaths_bedwars;
 }

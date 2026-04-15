@@ -69,7 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
           'Beds Lost: ${stats.beds_lost_bedwars}\n'
           'Beds Broken: ${stats.beds_broken_bedwars}\n'
           'Wins: ${stats.wins_bedwars}\n'
-          'Losses: ${stats.losses_bedwars}\n';
+          'Losses: ${stats.losses_bedwars}\n'
+          'W/L Ratio: ${stats.winLossRatio.toStringAsFixed(2)}\n'
+          'K/D Ratio: ${stats.killDeathRatio.toStringAsFixed(2)}\n';
 
       setState(() {
         if (userNumber == 1) {
