@@ -4,12 +4,14 @@ import 'package:hypixel_stat_tracker/url_builder.dart';
 import 'package:hypixel_stat_tracker/bedwars_stats.dart';
 
 class HypixelService {
-  final UrlBuilder _urlBuilder = UrlBuilder();
+  final UrlBuilder _urlBuilder;
   final DataParser _parser = DataParser();
   final http.Client _client;
 
-  HypixelService({http.Client? client})
-      : _client = client ?? http.Client();
+  HypixelService({
+    required String apiKey, http.Client? client})
+      : _urlBuilder = UrlBuilder(apiKey: apiKey),
+        _client = client ?? http.Client();
 
   Future<BedwarsStats> getBedwarsStats(String username) async {
     final uri = _urlBuilder.buildUri(username);
