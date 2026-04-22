@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hypixel_stat_tracker/hypixel_service.dart';
 import 'package:hypixel_stat_tracker/secrets.dart';
+import 'package:hypixel_stat_tracker/bedwars_stats.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,6 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String? _user1ResultText;
   String? _user2ResultText;
+  BedwarsStats? _user1Stats;
+  BedwarsStats? _user2Stats;
   bool _showComparison = false;
   int _selectedUser = 1;
 
@@ -76,8 +79,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
       setState(() {
         if (userNumber == 1) {
+          _user1Stats = stats;
           _user1ResultText = resultText;
         } else {
+          _user2Stats = stats;
           _user2ResultText = resultText;
         }
       });
@@ -93,9 +98,32 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _compareStats(){
+    if (_user1Stats == null || _user2Stats == null){
+      return;
+    }
     setState((){
       _showComparison = true;
     });
+  }
+
+  Color _getHigherStatColor(num userValue, num otherValue){
+    if(userValue > otherValue){
+      return Colors.green;
+    }
+    return Colors.black;
+  }
+
+  Widget _buildStatRow(String label, String value, Color color){
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical:2),
+      child: Text(
+        '$label: $value',
+        style: TextStyle(
+          color: color,
+          fontWeight: color == Colors.green ? FontWeight.bold : FontWeight.normal,
+        ),
+      ),
+    );
   }
 
   @override
@@ -105,7 +133,35 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  Widget _buildStatsBox(String title, String? resultText){
+  Widget _buildStatsBox(
+      String title,
+      BedwarsStats? currentStats,
+      BedwarsStats? otherStats,
+      ) {
+    if (currentStats == null) {
+      return Expanded(
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              const Text('No data'),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final other = otherStats;
+
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(12),
@@ -120,7 +176,72 @@ class _MyHomePageState extends State<MyHomePage> {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            Text(resultText ?? 'No data'),
+            _buildStatRow(
+                'Games Played',
+                currentStats.gamesPlayed.toString(),
+                other == null
+                    ? Colors.black
+                    : _getHigherStatColor(currentStats.gamesPlayed, other.gamesPlayed),
+            ),
+            _buildStatRow('Kills',
+              currentStats.kills.toString(),
+              other == null
+                  ? Colors.black
+                  : _getHigherStatColor(currentStats.kills, other.kills),
+            ),
+            _buildStatRow('Final Kills',
+                currentStats.finalKills.toString(),
+                other == null
+                    ? Colors.black
+                    : _getHigherStatColor(currentStats.finalKills, other.finalKills),
+            ),
+            _buildStatRow('Deaths', currentStats.deaths_bedwars.toString(),
+            other == null
+                ? Colors.black
+                : _getHigherStatColor(currentStats.deaths_bedwars, other.deaths_bedwars),
+            ),
+            _buildStatRow('Final Deaths',
+              currentStats.final_deaths_bedwars.toString(),
+              other == null
+                  ? Colors.black
+                  : _getHigherStatColor(currentStats.final_deaths_bedwars, other.final_deaths_bedwars),
+            ),
+            _buildStatRow('K/D Ratio',
+              currentStats.killDeathRatio.toStringAsFixed(2),
+              other == null
+                  ? Colors.black
+                  : _getHigherStatColor(currentStats.killDeathRatio, other.killDeathRatio),
+            ),
+            _buildStatRow('Beds Lost',
+              currentStats.beds_lost_bedwars.toString(),
+              other == null
+                  ? Colors.black
+                  : _getHigherStatColor(currentStats.beds_lost_bedwars, other.beds_lost_bedwars),
+            ),
+            _buildStatRow('Beds broken',
+              currentStats.beds_broken_bedwars.toString(),
+              other == null
+                  ? Colors.black
+                  : _getHigherStatColor(currentStats.beds_broken_bedwars, other.beds_broken_bedwars),
+            ),
+            _buildStatRow('Wins',
+              currentStats.wins_bedwars.toString(),
+              other == null
+                  ? Colors.black
+                  : _getHigherStatColor(currentStats.wins_bedwars, other.wins_bedwars),
+            ),
+            _buildStatRow('Losses',
+              currentStats.losses_bedwars.toString(),
+              other == null
+                  ? Colors.black
+                  : _getHigherStatColor(currentStats.losses_bedwars, other.losses_bedwars),
+            ),
+            _buildStatRow('W/L Ratio',
+              currentStats.winLossRatio.toStringAsFixed(2),
+              other == null
+                  ? Colors.black
+                  : _getHigherStatColor(currentStats.winLossRatio, other.winLossRatio),
+            ),
           ],
         ),
       ),
@@ -213,9 +334,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildStatsBox('Player 1', _user1ResultText),
+                          _buildStatsBox('Player 1', _user1Stats, _user2Stats),
                           const SizedBox(width: 12),
-                          _buildStatsBox('Player 2', _user2ResultText),
+                          _buildStatsBox('Player 2', _user2Stats, _user1Stats),
                         ],
                     ),
                 ],
