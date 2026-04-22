@@ -252,7 +252,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFEEEEEE),
-      body: Column(
+      body: SingleChildScrollView(
+        child:Column(
         children: <Widget>[
           Image.asset(
             'images/hypixelbedwars.png',
@@ -266,8 +267,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: 200,
                 fit: BoxFit.contain,
           ),
-          Expanded(
-            child: Center(
+          Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -342,8 +342,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
