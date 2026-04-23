@@ -28,4 +28,7 @@ class BedwarsStats {
 
   double get killDeathRatio =>
       deaths_bedwars == 0 ? kills.toDouble() : kills / deaths_bedwars;
+
+  double get finalKillDeathRatio =>
+      final_deaths_bedwars == 0 ? finalKills.toDouble() : finalKills / final_deaths_bedwars;
 }

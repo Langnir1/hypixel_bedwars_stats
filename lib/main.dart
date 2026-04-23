@@ -72,12 +72,13 @@ class _MyHomePageState extends State<MyHomePage> {
           'Final kills: ${stats.finalKills}\n'
           'Deaths: ${stats.deaths_bedwars}\n'
           'Final Deaths ${stats.final_deaths_bedwars}\n'
+          'Kill/Death Ratio: ${stats.killDeathRatio.toStringAsFixed(2)}\n'
+          'Final Kills/Final Deaths: ${stats.finalKillDeathRatio.toStringAsFixed(2)}\n'
           'Beds Lost: ${stats.beds_lost_bedwars}\n'
           'Beds Broken: ${stats.beds_broken_bedwars}\n'
           'Wins: ${stats.wins_bedwars}\n'
           'Losses: ${stats.losses_bedwars}\n'
-          'W/L Ratio: ${stats.winLossRatio.toStringAsFixed(2)}\n'
-          'K/D Ratio: ${stats.killDeathRatio.toStringAsFixed(2)}\n';
+          'Win/Loss Ratio: ${stats.winLossRatio.toStringAsFixed(2)}\n';
 
       setState(() {
         if (userNumber == 1) {
@@ -251,11 +252,17 @@ class _MyHomePageState extends State<MyHomePage> {
                       ? Colors.black
                       : _getHigherStatColor(currentStats.final_deaths_bedwars, other.final_deaths_bedwars),
                 ),
-                _buildStatRow('K/D Ratio',
+                _buildStatRow('Kill/Death Ratio',
                   currentStats.killDeathRatio.toStringAsFixed(2),
                   other == null
                       ? Colors.black
                       : _getHigherStatColor(currentStats.killDeathRatio, other.killDeathRatio),
+                ),
+                _buildStatRow('Final Kill/Final Death Ratio',
+                  currentStats.finalKillDeathRatio.toStringAsFixed(2),
+                  other == null
+                      ? Colors.black
+                      : _getHigherStatColor(currentStats.finalKillDeathRatio, other.finalKillDeathRatio),
                 ),
                 _buildStatRow('Beds Lost',
                   currentStats.beds_lost_bedwars.toString(),
@@ -281,7 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ? Colors.black
                       : _getHigherStatColor(currentStats.losses_bedwars, other.losses_bedwars),
                 ),
-                _buildStatRow('W/L Ratio',
+                _buildStatRow('Win/Loss Ratio',
                   currentStats.winLossRatio.toStringAsFixed(2),
                   other == null
                       ? Colors.black
