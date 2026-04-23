@@ -334,9 +334,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildStatsBox('Player 1', _user1Stats, _user2Stats),
+                          _buildStatsBox('Player 1 - ${_username1Controller.text.trim()}', _user1Stats, _user2Stats),
                           const SizedBox(width: 12),
-                          _buildStatsBox('Player 2', _user2Stats, _user1Stats),
+                          _buildStatsBox('Player 2 - ${_username2Controller.text.trim()}', _user2Stats, _user1Stats),
                         ],
                     ),
                 ],
