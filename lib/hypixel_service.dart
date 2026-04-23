@@ -7,6 +7,7 @@ class HypixelService {
   final UrlBuilder _urlBuilder;
   final DataParser _parser = DataParser();
   final http.Client _client;
+  final Map<String, BedwarsStats> _statsCache = {};
 
   HypixelService({
     required String apiKey, http.Client? client})
@@ -14,6 +15,12 @@ class HypixelService {
         _client = client ?? http.Client();
 
   Future<BedwarsStats> getBedwarsStats(String username) async {
+    final cacheKey = username.trim().toLowerCase();
+
+    if(_statsCache.containsKey(cacheKey)){
+      return _statsCache[cacheKey]!;
+    }
+
     final uri = _urlBuilder.buildUri(username);
     final response = await _client.get(uri);
 
@@ -21,6 +28,9 @@ class HypixelService {
       throw Exception('Failed to fetch player data');
     }
 
-    return _parser.getBedwarsStats(response.body);
+    final stats = _parser.getBedwarsStats(response.body);
+    _statsCache[cacheKey] = stats;
+
+    return stats;
   }
 }
