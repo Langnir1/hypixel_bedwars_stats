@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hypixel_stat_tracker/hypixel_service.dart';
 import 'package:hypixel_stat_tracker/secrets.dart';
 import 'package:hypixel_stat_tracker/bedwars_stats.dart';
+import 'package:hypixel_stat_tracker/mc_heads_url_builder.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,6 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _username1Controller = TextEditingController();
   final TextEditingController _username2Controller = TextEditingController();
   final HypixelService _service = HypixelService(apiKey: apiKey);
+  final McHeadsUrlBuilder _mcHeadsUrlBuilder = McHeadsUrlBuilder();
 
   String? _user1ResultText;
   String? _user2ResultText;
@@ -126,6 +128,27 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  Widget _buildPlayerHead(String username) {
+    final imageUrl = _mcHeadsUrlBuilder.buildHead(username);
+
+    return Container(
+      width: 64,
+      height: 64,
+      decoration: BoxDecoration(
+        border:  Border.all(color: Colors.black),
+      ),
+      child: Image.network(
+        imageUrl,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace){
+          return const Center(
+          child: Icon(Icons.person, size: 40),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _username1Controller.dispose();
@@ -135,6 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildStatsBox(
       String title,
+      String username,
       BedwarsStats? currentStats,
       BedwarsStats? otherStats,
       ) {
@@ -145,17 +169,33 @@ class _MyHomePageState extends State<MyHomePage> {
           decoration: BoxDecoration(
             border: Border.all(color: Colors.black),
           ),
-          child: Column(
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                title,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+              Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              title,
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 8),
+                            const Text('No data'),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      _buildPlayerHead(username),
+                    ],
+                  ),
               ),
-              const SizedBox(height: 8),
-              const Text('No data'),
             ],
-          ),
+          )
         ),
       );
     }
@@ -168,80 +208,88 @@ class _MyHomePageState extends State<MyHomePage> {
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
         ),
-        child: Column(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+            Expanded(child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                _buildStatRow(
+                  'Games Played',
+                  currentStats.gamesPlayed.toString(),
+                  other == null
+                      ? Colors.black
+                      : _getHigherStatColor(currentStats.gamesPlayed, other.gamesPlayed),
+                ),
+                _buildStatRow('Kills',
+                  currentStats.kills.toString(),
+                  other == null
+                      ? Colors.black
+                      : _getHigherStatColor(currentStats.kills, other.kills),
+                ),
+                _buildStatRow('Final Kills',
+                  currentStats.finalKills.toString(),
+                  other == null
+                      ? Colors.black
+                      : _getHigherStatColor(currentStats.finalKills, other.finalKills),
+                ),
+                _buildStatRow('Deaths', currentStats.deaths_bedwars.toString(),
+                  other == null
+                      ? Colors.black
+                      : _getHigherStatColor(currentStats.deaths_bedwars, other.deaths_bedwars),
+                ),
+                _buildStatRow('Final Deaths',
+                  currentStats.final_deaths_bedwars.toString(),
+                  other == null
+                      ? Colors.black
+                      : _getHigherStatColor(currentStats.final_deaths_bedwars, other.final_deaths_bedwars),
+                ),
+                _buildStatRow('K/D Ratio',
+                  currentStats.killDeathRatio.toStringAsFixed(2),
+                  other == null
+                      ? Colors.black
+                      : _getHigherStatColor(currentStats.killDeathRatio, other.killDeathRatio),
+                ),
+                _buildStatRow('Beds Lost',
+                  currentStats.beds_lost_bedwars.toString(),
+                  other == null
+                      ? Colors.black
+                      : _getHigherStatColor(currentStats.beds_lost_bedwars, other.beds_lost_bedwars),
+                ),
+                _buildStatRow('Beds broken',
+                  currentStats.beds_broken_bedwars.toString(),
+                  other == null
+                      ? Colors.black
+                      : _getHigherStatColor(currentStats.beds_broken_bedwars, other.beds_broken_bedwars),
+                ),
+                _buildStatRow('Wins',
+                  currentStats.wins_bedwars.toString(),
+                  other == null
+                      ? Colors.black
+                      : _getHigherStatColor(currentStats.wins_bedwars, other.wins_bedwars),
+                ),
+                _buildStatRow('Losses',
+                  currentStats.losses_bedwars.toString(),
+                  other == null
+                      ? Colors.black
+                      : _getHigherStatColor(currentStats.losses_bedwars, other.losses_bedwars),
+                ),
+                _buildStatRow('W/L Ratio',
+                  currentStats.winLossRatio.toStringAsFixed(2),
+                  other == null
+                      ? Colors.black
+                      : _getHigherStatColor(currentStats.winLossRatio, other.winLossRatio),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
-            _buildStatRow(
-                'Games Played',
-                currentStats.gamesPlayed.toString(),
-                other == null
-                    ? Colors.black
-                    : _getHigherStatColor(currentStats.gamesPlayed, other.gamesPlayed),
             ),
-            _buildStatRow('Kills',
-              currentStats.kills.toString(),
-              other == null
-                  ? Colors.black
-                  : _getHigherStatColor(currentStats.kills, other.kills),
-            ),
-            _buildStatRow('Final Kills',
-                currentStats.finalKills.toString(),
-                other == null
-                    ? Colors.black
-                    : _getHigherStatColor(currentStats.finalKills, other.finalKills),
-            ),
-            _buildStatRow('Deaths', currentStats.deaths_bedwars.toString(),
-            other == null
-                ? Colors.black
-                : _getHigherStatColor(currentStats.deaths_bedwars, other.deaths_bedwars),
-            ),
-            _buildStatRow('Final Deaths',
-              currentStats.final_deaths_bedwars.toString(),
-              other == null
-                  ? Colors.black
-                  : _getHigherStatColor(currentStats.final_deaths_bedwars, other.final_deaths_bedwars),
-            ),
-            _buildStatRow('K/D Ratio',
-              currentStats.killDeathRatio.toStringAsFixed(2),
-              other == null
-                  ? Colors.black
-                  : _getHigherStatColor(currentStats.killDeathRatio, other.killDeathRatio),
-            ),
-            _buildStatRow('Beds Lost',
-              currentStats.beds_lost_bedwars.toString(),
-              other == null
-                  ? Colors.black
-                  : _getHigherStatColor(currentStats.beds_lost_bedwars, other.beds_lost_bedwars),
-            ),
-            _buildStatRow('Beds broken',
-              currentStats.beds_broken_bedwars.toString(),
-              other == null
-                  ? Colors.black
-                  : _getHigherStatColor(currentStats.beds_broken_bedwars, other.beds_broken_bedwars),
-            ),
-            _buildStatRow('Wins',
-              currentStats.wins_bedwars.toString(),
-              other == null
-                  ? Colors.black
-                  : _getHigherStatColor(currentStats.wins_bedwars, other.wins_bedwars),
-            ),
-            _buildStatRow('Losses',
-              currentStats.losses_bedwars.toString(),
-              other == null
-                  ? Colors.black
-                  : _getHigherStatColor(currentStats.losses_bedwars, other.losses_bedwars),
-            ),
-            _buildStatRow('W/L Ratio',
-              currentStats.winLossRatio.toStringAsFixed(2),
-              other == null
-                  ? Colors.black
-                  : _getHigherStatColor(currentStats.winLossRatio, other.winLossRatio),
-            ),
+            const SizedBox(width: 12),
+            _buildPlayerHead(username),
           ],
         ),
       ),
@@ -324,19 +372,38 @@ class _MyHomePageState extends State<MyHomePage> {
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
                       ),
-                      child: Text(
-                        _selectedUser == 1
-                            ?(_user1ResultText ?? 'No data')
-                            :(_user2ResultText ?? 'No data'),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(child: Text(
+                            _selectedUser == 1
+                                ?(_user1ResultText ?? 'No data')
+                                :(_user2ResultText ?? 'No data'),
+                          ),
+                          ),
+                          const SizedBox(width: 12),
+                          _buildPlayerHead(
+                              _selectedUser == 1
+                                  ? _username1Controller.text.trim()
+                                  : _username2Controller.text.trim(),
+                          ),
+                        ],
                       ),
                     ),
                   if(_showComparison)
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildStatsBox('Player 1 - ${_username1Controller.text.trim()}', _user1Stats, _user2Stats),
+                          _buildStatsBox('Player 1 - ${_username1Controller.text.trim()}',
+                              _username1Controller.text.trim(),
+                              _user1Stats,
+                              _user2Stats),
+
                           const SizedBox(width: 12),
-                          _buildStatsBox('Player 2 - ${_username2Controller.text.trim()}', _user2Stats, _user1Stats),
+                          _buildStatsBox('Player 2 - ${_username2Controller.text.trim()}',
+                              _username2Controller.text.trim(),
+                              _user2Stats,
+                              _user1Stats),
                         ],
                     ),
                 ],
