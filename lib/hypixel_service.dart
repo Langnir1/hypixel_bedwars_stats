@@ -7,6 +7,7 @@ class HypixelService {
   final UrlBuilder _urlBuilder;
   final DataParser _parser = DataParser();
   final http.Client _client;
+  ///Cache player stats to avoid multiple API requests for the same username.
   final Map<String, BedwarsStats> _statsCache = {};
 
   HypixelService({

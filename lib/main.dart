@@ -99,6 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  ///Only lets the user compare both stats after both stats have loaded.
   void _compareStats(){
     if (_user1Stats == null || _user2Stats == null){
       return;
@@ -140,6 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Image.network(
         imageUrl,
         fit: BoxFit.cover,
+        ///Shows a general flutter person icon if the player head doesn't load.
         errorBuilder: (context, error, stackTrace){
           return const Center(
           child: Icon(Icons.person, size: 40),
