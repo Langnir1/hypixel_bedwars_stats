@@ -114,6 +114,9 @@ class _MyHomePageState extends State<MyHomePage> {
     if(userValue > otherValue){
       return Colors.green;
     }
+    else if(userValue == otherValue){
+      return Colors.blue;
+    }
     return Colors.black;
   }
 
